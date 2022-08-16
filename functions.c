@@ -5,13 +5,13 @@
  * @queue: Something
  * @num: Something
  */
-void push(stack_t **stack, unsigned int num)
+void push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *newNode;
 
 	newNode = malloc(sizeof(stack_t));
 
-	newNode->n = num;
+	newNode->n = line_number;
 	newNode->next = *stack;
 	newNode->prev = NULL;
 
@@ -19,7 +19,7 @@ void push(stack_t **stack, unsigned int num)
 		(*stack)->prev = newNode;
 	(*stack) = newNode;
 }
-void pall(stack_t **stack, unsigned int num)
+void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *valnode = *stack;
 
