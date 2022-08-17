@@ -2,7 +2,7 @@
 
 /**
  * push - function that pushes an element to the stack
- * @queue: Something
+ * @stack: Something
  * @line_number: Something
  */
 void push(stack_t **stack, unsigned int line_number)
