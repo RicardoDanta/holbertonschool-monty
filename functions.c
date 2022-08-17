@@ -16,7 +16,7 @@ void push(stack_t **stack, unsigned int line_number)
 	newNode->next = *stack;
 	newNode->prev = NULL;
 
-	if ((*stack) != NULL)	
+	if ((*stack) != NULL)
 		(*stack)->prev = newNode;
 	(*stack) = newNode;
 }
