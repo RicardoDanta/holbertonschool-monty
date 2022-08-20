@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
+
 	readfile(file);
 	return (EXIT_SUCCESS);
 }
@@ -24,17 +25,18 @@ void readline(line_t *line, char *buffer)
 	unsigned int i;
 	char *token = NULL;
 
-	 line->content = malloc(sizeof(char *));
-	 if (!line->content)
-		 malloc_error();
+	line->content = malloc(sizeof(char *));
+	if (!line->content)
+		malloc_error();
 
-	 token = strtok(buffer, " '\n'");
-	 for (i = 0; token && i < 2; i++)
-	 {
+	token = strtok(buffer, " '\n'");
+	for (i = 0; token && i < 2; i++)
+	{
 		line->content[i] = token;
 		token = strtok(NULL, " \n");
-	  }
-	  line->content[i] = NULL;
+	}
+
+	line->content[i] = NULL;
 }
 void readfile(FILE *file)
 {
@@ -42,29 +44,33 @@ void readfile(FILE *file)
 	meta_t *meta = NULL;
 	line_t line;
 
-	 meta = malloc(sizeof(meta_t));
-	 if (!meta)
-		 malloc_error();
+	meta = malloc(sizeof(meta_t));
+	if (!meta)
+		malloc_error();
 
-	 line.number = 0;
-	 line.content = NULL;
+	line.number = 0;
+	line.content = NULL;
 
-	 meta->file = file;
-	 meta->stack = NULL;
-	 meta->buf = NULL;
+	meta->file = file;
+	meta->stack = NULL;
+	meta->buf = NULL;
 
-	 while (getline(&(meta->buf), &size, meta->file) != -1)
-	 {
-		  line.number++;
-		  readline(&line, meta->buf);
-		  if (line.content)
-			  get_op_code(line, meta)(&(meta->stack), line.number);
-	 }
-	 fclose(meta->file);
+	while (getline(&(meta->buf), &size, meta->file) != -1)
+	{
+		line.number++;
+		readline(&line, meta->buf);
+		if (line.content)
+			get_op_code(line, meta)(&(meta->stack), line.number);
+	}
+
+	free(meta->buf);
+	free_stack(&(meta->stack));
+	fclose(meta->file);
+	free(meta);
 
 }
 void malloc_error(void)
 {
         fprintf(stderr, "Error: malloc failed\n");
-        exit(EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }

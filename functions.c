@@ -13,7 +13,9 @@ void push(stack_t **stack, unsigned int nline)
 	newnode = malloc(sizeof(stack_t));
 	if (newnode == NULL)
 	{
-		malloc_error();
+		fprintf(stderr, "Error: malloc failed\n");
+		free_stack(stack);
+		exit(EXIT_FAILURE);
 	}
 
 	newnode->next = *stack;
@@ -22,4 +24,16 @@ void push(stack_t **stack, unsigned int nline)
 	if (*stack)
 		(*stack)->prev = newnode;
 	*stack = newnode;
+}
+void pall(stack_t **stack, unsigned int nline)
+{
+        stack_t *temp;
+        (void)nline;
+
+        temp = *stack;
+        while (temp)
+        {
+                printf("%d\n", temp->n);
+                temp = temp->next;
+        }
 }

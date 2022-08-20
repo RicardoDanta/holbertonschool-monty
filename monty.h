@@ -54,6 +54,8 @@ void readfile(FILE *file);
 void readline(line_t *line, char *buffer);
 void malloc_error(void);
 
+void free_stack(stack_t **stack);
 void push(stack_t **stack, unsigned int nline);
+void pall(stack_t **stack, unsigned int nline);
 
 #endif
