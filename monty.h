@@ -1,29 +1,12 @@
 #ifndef MONTY_H
 #define MONTY_H
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <stdbool.h>
+#include <ctype.h>
 #include <stdarg.h>
-
-typedef struct arg_s
-{
-        int arg;
-        int flag;
-} arg_t;
-
-extern arg_t arg;
-
-typedef struct line
-{
-        unsigned int number;
-        char **content;
-} line_t;
-
-typedef struct meta_s
-{
-        char *buf;
-        stack_t *stack;
-        FILE *file;
-} meta_t;
 
 /* stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -52,12 +35,26 @@ typedef struct instruction_s
         char *opcode;
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+
+typedef struct line
+{
+        unsigned int number;
+        char **content;
+} line_t;
+
+typedef struct meta_s
+{
+        char *buf;
+        stack_t *stack;
+        FILE *file;
+} meta_t;
+
 void (*get_op_code(line_t line, meta_t *meta))(stack_t **, unsigned int);
-int main(int argc, char *argv[]);
-void readline(line_t *line, char *buffer);
 void readfile(FILE *file);
+void readline(line_t *line, char *buffer);
 void malloc_error(void);
 
-void push(stack_t **stack, unsigned int line_number);
+void free_stack(stack_t **stack);
+void push(stack_t **stack, unsigned int nline);
 
 #endif

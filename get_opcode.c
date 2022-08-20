@@ -9,7 +9,7 @@ void (*get_op_code(line_t line, meta_t *meta))(stack_t **, unsigned int)
 
 	while (ops[i].opcode)
 	{
-		if (strcmp(ops[i].opcode, line.content[o]) == 0)
+		if (strcmp(ops[i].opcode, line.content[0]) == 0)
 		{
 			return (ops[i].f);
 		}
